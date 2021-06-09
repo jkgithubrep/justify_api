@@ -1,0 +1,9 @@
+{
+  "name": "justify_api",
+  "version": "1.0.0",
+  "description": "An API to justify text",
+  "main": "index.js",
+  "repository": "git@gitlab.com:jkgitlabwork/justify_api.git",
+  "author": "Jalil Kettani <3053619-jkgitlabwork@users.noreply.gitlab.com>",
+  "license": "GPLv3"
+}
