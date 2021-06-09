@@ -5,5 +5,8 @@
   "main": "index.js",
   "repository": "git@gitlab.com:jkgitlabwork/justify_api.git",
   "author": "Jalil Kettani <3053619-jkgitlabwork@users.noreply.gitlab.com>",
-  "license": "GPLv3"
+  "license": "GPLv3",
+  "devDependencies": {
+    "typescript": "^4.3.2"
+  }
 }
