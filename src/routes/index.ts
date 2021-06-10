@@ -5,8 +5,10 @@ import JustifyRouter from "./justify.router";
 
 const router = express.Router();
 
-router.use("/users", UserRouter);
-router.use("/token", TokenRouter);
-router.use("/justify", JustifyRouter);
+const root = "/api";
+
+router.use(`${root}/users`, UserRouter);
+router.use(`${root}/token`, TokenRouter);
+router.use(`${root}/justify`, JustifyRouter);
 
 export default router;
