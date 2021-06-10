@@ -1,9 +1,9 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import { UserController } from "../controllers/user.controller";
 
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post("/", async (req: Request, res: Response) => {
   const controller = new UserController();
   try {
     await controller.createUser(req.body);
