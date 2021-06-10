@@ -1,17 +1,16 @@
-import bcrypt from "bcryptjs";
-const saltRounds = 10;
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
+@Entity()
 export class User {
-  email: string;
-  password: string;
-  validated = false;
+  @PrimaryGeneratedColumn("uuid")
+  id!: string;
 
-  constructor(email: string, password: string) {
-    this.email = email;
-    this.password = password;
-  }
+  @Column("varchar", { length: 200 })
+  email!: string;
 
-  async register(): Promise<void> {
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
+  @Column("varchar", { length: 200 })
+  passhash!: string;
+
+  @Column("boolean")
+  validated!: boolean;
 }
