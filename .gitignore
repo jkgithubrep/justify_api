@@ -13,6 +13,9 @@ logs
 results
 tmp
 
+# Swagger.json
+public/swagger.json
+
 # Resources
 resources
 
