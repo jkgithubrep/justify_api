@@ -5,6 +5,7 @@ import {
   getTodayTotalRequestSizeByToken,
 } from "../repositories/apiRequest";
 import { verifyToken } from "../repositories/token";
+import { justifyConfig } from "../config";
 
 @Route("justify")
 @Tags("Justify")
@@ -17,7 +18,7 @@ export class JustifyController {
     const todayBalance = await getTodayTotalRequestSizeByToken(tokenEntry);
     if (todayBalance + text.length > tokenEntry.rate_limit)
       throw new Error("Payment request");
-    const textJustified = justify(text, 15);
+    const textJustified = justify(text, justifyConfig.maxWidth);
     await createRequest({ token: tokenEntry, size: text.length });
     return textJustified;
   }
