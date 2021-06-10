@@ -16,6 +16,6 @@ export class Token {
   rate_limit!: number;
 
   @OneToOne(() => User)
-  @JoinColumn()
-  user_id!: User;
+  @JoinColumn({ name: "user_id" })
+  user!: User;
 }
