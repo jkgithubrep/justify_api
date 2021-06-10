@@ -10,7 +10,7 @@ const getOptions = (): ConnectionOptions => {
   if (process.env.DATABASE_URL) {
     Object.assign(connectionOptions, {
       url: process.env.DATABASE_URL,
-      extra: { ssl: true, rejectUnauthorized: false },
+      ssl: { rejectUnauthorized: false },
     });
   } else {
     Object.assign(connectionOptions, {
