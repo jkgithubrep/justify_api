@@ -3,9 +3,11 @@ import {
   PrimaryGeneratedColumn,
   Column,
   OneToOne,
+  OneToMany,
   JoinColumn,
 } from "typeorm";
 import { User } from "./User";
+import { ApiRequest } from "./ApiRequest";
 
 @Entity()
 export class Token {
@@ -18,4 +20,7 @@ export class Token {
   @OneToOne(() => User)
   @JoinColumn({ name: "user_id" })
   user!: User;
+
+  @OneToMany(() => ApiRequest, (request: ApiRequest) => request.token)
+  requests!: Request[];
 }
