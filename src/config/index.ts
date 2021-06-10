@@ -1,3 +1,4 @@
 import { justifyConfig } from "./justify";
+import { tokenConfig } from "./token";
 
-export { justifyConfig };
+export { justifyConfig, tokenConfig };

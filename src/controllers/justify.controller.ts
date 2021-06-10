@@ -6,6 +6,7 @@ import {
 } from "../repositories/apiRequest";
 import { verifyToken } from "../repositories/token";
 import { justifyConfig } from "../config";
+import { PaymentError } from "../errors";
 
 @Route("justify")
 @Tags("Justify")
@@ -17,7 +18,7 @@ export class JustifyController {
     const tokenEntry = await verifyToken(token);
     const todayBalance = await getTodayTotalRequestSizeByToken(tokenEntry);
     if (todayBalance + text.length > tokenEntry.rate_limit)
-      throw new Error("Payment request");
+      throw new PaymentError("Payment Required");
     const textJustified = justify(text, justifyConfig.maxWidth);
     await createRequest({ token: tokenEntry, size: text.length });
     return textJustified;

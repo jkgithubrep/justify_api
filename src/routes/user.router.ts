@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { UserController } from "../controllers/user.controller";
+import { ValidationError } from "../errors";
 
 const router = express.Router();
 
@@ -7,13 +8,15 @@ router.post("/", async (req: Request, res: Response) => {
   const controller = new UserController();
   try {
     await controller.createUser(req.body);
-    return res.send({
-      message: "User successfully created.",
-    });
+    res.send("User successfully created.");
   } catch (err) {
-    return res.send({
-      message: "Error when trying to create user.",
-    });
+    if (err instanceof ValidationError) {
+      res.status(400);
+      res.send(err.message);
+    } else {
+      res.status(500);
+      res.send("Please try again later.");
+    }
   }
 });
 

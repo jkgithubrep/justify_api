@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { TokenController } from "../controllers/token.controller";
+import { ValidationError } from "../errors";
 
 const router = express.Router();
 
@@ -11,10 +12,13 @@ router.post("/", async (req: Request, res: Response) => {
       token: token,
     });
   } catch (err) {
-    console.log(err);
-    return res.send({
-      message: err.message,
-    });
+    if (err instanceof ValidationError) {
+      res.status(400);
+      res.send(err.message);
+    } else {
+      res.status(500);
+      res.send("Please try again later");
+    }
   }
 });
 

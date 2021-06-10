@@ -1,5 +1,6 @@
 import express, { Request, Response } from "express";
 import { JustifyController } from "../controllers/justify.controller";
+import { PaymentError, ValidationError } from "../errors";
 
 const router = express.Router();
 
@@ -13,10 +14,17 @@ router.post("/:token", async (req: Request, res: Response) => {
     });
     return res.send(textJustified);
   } catch (err) {
-    console.log(err);
-    return res.send({
-      message: err.message,
-    });
+    if (err instanceof PaymentError) {
+      res.status(402);
+      res.send(err.message);
+    } else if (err instanceof ValidationError) {
+      res.status(400);
+      res.send(err.message);
+    } else {
+      console.log(err);
+      res.status(500);
+      res.send("Please try again later");
+    }
   }
 });
 
