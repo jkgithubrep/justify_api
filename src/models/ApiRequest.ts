@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  CreateDateColumn,
 } from "typeorm";
 import { Token } from "./Token";
 
@@ -14,6 +15,9 @@ export class ApiRequest {
 
   @Column("int")
   size!: number;
+
+  @CreateDateColumn()
+  created_at!: Date;
 
   @ManyToOne(() => Token, (token) => token.requests)
   @JoinColumn({ name: "token_id" })

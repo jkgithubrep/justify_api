@@ -1,5 +1,7 @@
+import jwt from "jsonwebtoken";
 import { getRepository } from "typeorm";
 import { User, Token } from "../models";
+import { getUserByEmail } from "./user";
 
 export interface ITokenPayload {
   user: User;
@@ -25,5 +27,15 @@ export const createToken = async ({
 export const getTokenByUser = async (user: User): Promise<Token | null> => {
   const token = await getRepository(Token).findOne({ where: { user } });
   if (!token) return null;
+  return token;
+};
+
+export const verifyToken = async (tokenToVerify: string): Promise<Token> => {
+  const decoded = jwt.verify(tokenToVerify, "shhhhhhhh", { complete: true });
+  // @ts-ignore
+  const user = await getUserByEmail(decoded.payload.email);
+  if (!user) throw new Error("User not found.");
+  const token = await getTokenByUser(user);
+  if (!token) throw new Error("Token not found.");
   return token;
 };
