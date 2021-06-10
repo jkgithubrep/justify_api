@@ -17,7 +17,7 @@ export class JustifyController {
     const todayBalance = await getTodayTotalRequestSizeByToken(tokenEntry);
     if (todayBalance + text.length > tokenEntry.rate_limit)
       throw new Error("Payment request");
-    const textJustified = justify(text);
+    const textJustified = justify(text, 15);
     await createRequest({ token: tokenEntry, size: text.length });
     return textJustified;
   }

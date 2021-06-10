@@ -11,9 +11,7 @@ router.post("/:token", async (req: Request, res: Response) => {
       token,
       text: req.body,
     });
-    return res.send({
-      result: textJustified,
-    });
+    return res.send(textJustified);
   } catch (err) {
     console.log(err);
     return res.send({
