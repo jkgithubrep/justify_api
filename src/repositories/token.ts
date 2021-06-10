@@ -32,7 +32,9 @@ export const getTokenByUser = async (user: User): Promise<Token | null> => {
 };
 
 export const verifyToken = async (tokenToVerify: string): Promise<Token> => {
-  const decoded = jwt.verify(tokenToVerify, "shhhhhhhh", { complete: true });
+  const decoded = jwt.verify(tokenToVerify, process.env.JWT_SECRET || "test", {
+    complete: true,
+  });
   // @ts-ignore
   const user = await getUserByEmail(decoded.payload.email);
   if (!user) throw new ValidationError("User not found.");

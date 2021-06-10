@@ -13,7 +13,7 @@ export class TokenController {
     const existingToken = await getTokenByUser(user);
     if (!existingToken)
       await createToken({ user, rateLimit: tokenConfig.rateLimit });
-    const token = jwt.sign(body, "shhhhhhhh");
+    const token = jwt.sign(body, process.env.JWT_SECRET || "test");
     return token;
   }
 }
