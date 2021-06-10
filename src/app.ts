@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import express from "express";
 import swaggerUi from "swagger-ui-express";
+import router from "./routes";
 
 const app = express();
 
@@ -10,6 +11,8 @@ app.use(express.text());
 app.set("port", process.env.PORT || 3000);
 
 app.use(express.static("public"));
+
+app.use(router);
 
 app.use(
   "/docs",
