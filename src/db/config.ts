@@ -10,4 +10,5 @@ export const configDB: ConnectionOptions = {
   database: process.env.POSTGRES_DB || "justify",
   entities: [User, Token, ApiRequest],
   synchronize: true,
+  extra: { ssl: true, rejectUnauthorized: false },
 };
