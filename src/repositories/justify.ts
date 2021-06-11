@@ -4,6 +4,7 @@ export interface IJustifyPayload {
 }
 
 export const justify = (text: string, maxWidth: number): string => {
+  if (!text) return text;
   const words = text.split(/\s+/);
   const totalNbOfWords = words.length;
 
@@ -54,7 +55,7 @@ export const justify = (text: string, maxWidth: number): string => {
   ): string {
     let line = words[start];
     const spacesNeededInLine = end - start - 1;
-    const spacesBetweenWords = spacesRemaining / spacesNeededInLine;
+    const spacesBetweenWords = Math.floor(spacesRemaining / spacesNeededInLine);
     let extraSpaces = spacesRemaining % spacesNeededInLine;
     for (let i = start + 1; i < end; i++) {
       const spacesToAdd = spacesBetweenWords + (extraSpaces-- > 0 ? 1 : 0);
