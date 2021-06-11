@@ -12,6 +12,7 @@ export interface IUserPayload {
 }
 
 const validateEmail = async (email: string): Promise<void> => {
+  if (!email) throw new ValidationError("Email missing.");
   if (!validator.isEmail(email))
     throw new ValidationError("Invalid email address.");
   const userFound = await getUserByEmail(email);
@@ -19,6 +20,7 @@ const validateEmail = async (email: string): Promise<void> => {
 };
 
 const validatePassword = (password: string): void => {
+  if (!password) throw new ValidationError("Password missing.");
   if (password.length < 8)
     throw new ValidationError("Password must have at least 12 characters.");
   if (password.length > 50)
