@@ -4,7 +4,7 @@ import { validateUser, IUserPayload } from "../repositories/user";
 import { createToken, getTokenByUser } from "../repositories/token";
 import { tokenConfig } from "../config";
 
-@Route("token")
+@Route("api/token")
 @Tags("Token")
 export class TokenController {
   @Post("/")

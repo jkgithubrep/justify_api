@@ -2,7 +2,7 @@ import { Route, Post, Body, Tags } from "tsoa";
 import { User } from "../models";
 import { createUser, IUserPayload } from "../repositories/user";
 
-@Route("users")
+@Route("api/users")
 @Tags("User")
 export class UserController {
   @Post("/")

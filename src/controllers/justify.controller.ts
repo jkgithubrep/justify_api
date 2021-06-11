@@ -8,7 +8,7 @@ import { verifyToken } from "../repositories/token";
 import { justifyConfig } from "../config";
 import { PaymentError } from "../errors";
 
-@Route("justify")
+@Route("api/justify")
 @Tags("Justify")
 export class JustifyController {
   @Post("/")
