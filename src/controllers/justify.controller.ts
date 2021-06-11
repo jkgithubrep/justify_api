@@ -17,10 +17,11 @@ export class JustifyController {
   ): Promise<string> {
     const tokenEntry = await verifyToken(token);
     const todayBalance = await getTodayTotalRequestSizeByToken(tokenEntry);
-    if (todayBalance + text.length > tokenEntry.rate_limit)
+    const nbOfWordsInText = text.trim().split(/\s+/).length;
+    if (todayBalance + nbOfWordsInText > tokenEntry.rate_limit)
       throw new PaymentError("Payment Required");
     const textJustified = justify(text, justifyConfig.maxWidth);
-    await createRequest({ token: tokenEntry, size: text.length });
+    await createRequest({ token: tokenEntry, size: nbOfWordsInText });
     return textJustified;
   }
 }
