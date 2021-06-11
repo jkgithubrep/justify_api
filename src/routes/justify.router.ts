@@ -11,11 +11,14 @@ router.post(
   async (req: Request, res: Response) => {
     const controller = new JustifyController();
     try {
+      if (!req.is("text/plain"))
+        throw new ValidationError("Expected MIME type: plain/text");
       const token = req.token;
       const textJustified = await controller.justifyText({
         token,
         text: req.body,
       });
+      res.set("content-type", "text/plain");
       return res.send(textJustified);
     } catch (err) {
       if (err instanceof PaymentError) {
