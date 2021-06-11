@@ -1,27 +1,35 @@
 import { ConnectionOptions } from "typeorm";
 import { User, Token, ApiRequest } from "../models";
 
-const getOptions = (): ConnectionOptions => {
+const getOptions = (env: string): ConnectionOptions => {
   const connectionOptions: ConnectionOptions = {
     type: "postgres",
     entities: [User, Token, ApiRequest],
     synchronize: true,
   };
-  if (process.env.DATABASE_URL) {
+  if (env === "production") {
     Object.assign(connectionOptions, {
       url: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false },
     });
+  } else if (env === "development") {
+    Object.assign(connectionOptions, {
+      host: process.env.POSTGRES_HOST,
+      port: Number(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB,
+    });
   } else {
     Object.assign(connectionOptions, {
-      host: process.env.POSTGRES_HOST || "localhost",
-      port: Number(process.env.POSTGRES_PORT) || 5432,
-      username: process.env.POSTGRES_USER || "postgres",
-      password: process.env.POSTGRES_PASSWORD || "jk",
-      database: process.env.POSTGRES_DB || "justify",
+      host: process.env.POSTGRES_HOST,
+      port: Number(process.env.POSTGRES_PORT),
+      username: process.env.POSTGRES_USER,
+      password: process.env.POSTGRES_PASSWORD,
+      database: process.env.POSTGRES_DB_TEST,
     });
   }
   return connectionOptions;
 };
 
-export const configDB = getOptions();
+export const configDB = getOptions(process.env.NODE_ENV || "development");
