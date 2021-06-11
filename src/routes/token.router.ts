@@ -17,7 +17,7 @@ router.post("/", async (req: Request, res: Response) => {
       res.send(err.message);
     } else {
       res.status(500);
-      res.send("Please try again later");
+      res.send("Please try again later.");
     }
   }
 });

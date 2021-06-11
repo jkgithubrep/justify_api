@@ -8,7 +8,7 @@ export const getTokenInRequestHeader = (
   const bearerHeader = req.headers["authorization"];
   if (!bearerHeader) {
     res.status(403);
-    res.send("Token missing");
+    res.send("Token missing.");
     return;
   }
   req.token = bearerHeader.split(" ")[1];

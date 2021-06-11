@@ -57,10 +57,12 @@ export const validateUser = async ({
   email,
   password,
 }: IUserPayload): Promise<User> => {
+  if (!email || !password)
+    throw new ValidationError("Invalid email or password.");
   const user = await getUserByEmail(email);
   if (!user) throw new ValidationError("Invalid email or password.");
   const match = await bcrypt.compare(password, user.passhash);
-  if (!match) throw new ValidationError("Invalid email or password");
+  if (!match) throw new ValidationError("Invalid email or password.");
   // Line to add to prevent someone from creating multiple account to easily.
   // if (!user.validated) throw new Error("Email address not validated.");
   return user;

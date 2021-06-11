@@ -12,7 +12,7 @@ router.post(
     const controller = new JustifyController();
     try {
       if (!req.is("text/plain"))
-        throw new ValidationError("Expected MIME type: plain/text");
+        throw new ValidationError("Expected MIME type: plain/text.");
       const token = req.token;
       const textJustified = await controller.justifyText({
         token,
