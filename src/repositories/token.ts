@@ -31,11 +31,22 @@ export const getTokenByUser = async (user: User): Promise<Token | null> => {
   return token;
 };
 
+type DecodedToken = {
+  signature: string;
+  header: string;
+  payload: { email: string; password: string };
+};
+
 export const verifyToken = async (tokenToVerify: string): Promise<Token> => {
-  const decoded = jwt.verify(tokenToVerify, process.env.JWT_SECRET || "test", {
-    complete: true,
-  });
-  // @ts-ignore
+  let decoded: DecodedToken;
+  try {
+    // @ts-ignore
+    decoded = jwt.verify(tokenToVerify, process.env.JWT_SECRET || "test", {
+      complete: true,
+    });
+  } catch (err) {
+    throw new ValidationError(err.message);
+  }
   const user = await getUserByEmail(decoded.payload.email);
   if (!user) throw new ValidationError("User not found.");
   const token = await getTokenByUser(user);
