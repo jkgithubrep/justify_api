@@ -154,7 +154,6 @@ describe("POST /api/justify", () => {
       const token = await request(app)
         .post("/api/token")
         .send({ email: "foo@bar.com", password: "password" });
-      console.log(token.body.token);
 
       const result = await request(app)
         .post("/api/justify")

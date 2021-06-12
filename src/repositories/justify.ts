@@ -5,7 +5,7 @@ export interface IJustifyPayload {
 
 export const justify = (text: string, maxWidth: number): string => {
   if (!text) return text;
-  const words = text.split(/\s+/);
+  const words = text.trim().split(/\s+/);
   const totalNbOfWords = words.length;
 
   const resultLines: string[] = [];
