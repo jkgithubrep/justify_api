@@ -45,7 +45,7 @@ export const verifyToken = async (tokenToVerify: string): Promise<Token> => {
       complete: true,
     });
   } catch (err) {
-    throw new ValidationError(err.message);
+    throw new ValidationError("Invalid token.");
   }
   const user = await getUserByEmail(decoded.payload.email);
   if (!user) throw new ValidationError("User not found.");
