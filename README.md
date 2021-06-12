@@ -20,3 +20,10 @@
 - Les tests, le coverage
 - La lisibilité
 - La documentation
+
+## Points à améliorer
+
+- [ ] Documenter le code en utilisant JSDoc.
+- [ ] Remplacer l'algorithme de justification de type "greedy" par un algorithme utilisant la programmation dynamique pour obtenir un résultat plus homogène.
+- [ ] Intégrer un système de validation d'email pour éviter le spam.
+- [ ] Réduire le temps d'exécution des tests en mettant en place un système permettant d'avoir une base de données par worker (see [Testing Database Interactions with Jest](https://walrus.ai/blog/2020/04/testing-database-interactions-with-jest/))
