@@ -104,37 +104,37 @@ describe("POST /api/token", () => {
     });
   });
 
-  it("should return 400 (no body)", async () => {
-    const result = await request(app).post("/api/token");
-    expect(result.status).toEqual(400);
-    expect(result.text).toBe("Invalid email or password.");
-  });
-
-  it("should return 400 (missing password)", async () => {
-    const result = await request(app)
-      .post("/api/token")
-      .send({ email: "foo@bar.com" });
-    expect(result.status).toEqual(400);
-    expect(result.text).toBe("Invalid email or password.");
-  });
-
-  it("should return 400 (missing email)", async () => {
-    const result = await request(app)
-      .post("/api/token")
-      .send({ password: "password" });
-    expect(result.status).toEqual(400);
-    expect(result.text).toBe("Invalid email or password.");
-  });
-
-  it("should return 400 (unknown email)", async () => {
-    const result = await request(app)
-      .post("/api/token")
-      .send({ email: "not.registered@bar.com", password: "password" });
-    expect(result.status).toEqual(400);
-    expect(result.text).toBe("Invalid email or password.");
-  });
-
   describe("Incorrect params", () => {
+    it("should return 400 (no body)", async () => {
+      const result = await request(app).post("/api/token");
+      expect(result.status).toEqual(400);
+      expect(result.text).toBe("Invalid email or password.");
+    });
+
+    it("should return 400 (missing password)", async () => {
+      const result = await request(app)
+        .post("/api/token")
+        .send({ email: "foo@bar.com" });
+      expect(result.status).toEqual(400);
+      expect(result.text).toBe("Invalid email or password.");
+    });
+
+    it("should return 400 (missing email)", async () => {
+      const result = await request(app)
+        .post("/api/token")
+        .send({ password: "password" });
+      expect(result.status).toEqual(400);
+      expect(result.text).toBe("Invalid email or password.");
+    });
+
+    it("should return 400 (unknown email)", async () => {
+      const result = await request(app)
+        .post("/api/token")
+        .send({ email: "not.registered@bar.com", password: "password" });
+      expect(result.status).toEqual(400);
+      expect(result.text).toBe("Invalid email or password.");
+    });
+
     it("should return 400 (wrong password)", async () => {
       const result = await request(app)
         .post("/api/token")
@@ -159,9 +159,13 @@ describe("POST /api/justify", () => {
         .post("/api/justify")
         .set("Authorization", `Bearer ${token.body.token}`)
         .set("Content-Type", "text/plain")
-        .send("This is some text");
+        .send(
+          "Longtemps, je me suis couché de bonne heure. Parfois, à peine ma bougie éteinte, mes yeux se fermaient si vite que je n’avais pas le temps de me dire: «Je m’endors.»"
+        );
 
-      expect(result.text).toBe("This is some text");
+      expect(result.text).toBe(
+        "Longtemps, je me suis couché de bonne heure. Parfois, à peine ma bougie éteinte,\nmes  yeux  se  fermaient  si  vite  que  je n’avais pas le temps de me dire: «Je\nm’endors.»"
+      );
       expect(result.status).toEqual(200);
     });
   });
@@ -198,7 +202,7 @@ describe("POST /api/justify", () => {
         .set("Content-Type", "text/plain")
         .send("This is some text.");
       expect(result.status).toEqual(400);
-      expect(result.text).toBe("invalid token");
+      expect(result.text).toBe("Invalid token.");
     });
   });
 });
